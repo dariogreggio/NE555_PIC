@@ -1,14 +1,34 @@
-#include <htc.h>
+#define _XTAL_FREQ 8000000UL			// PIC12F1822 (v. configure)
+
+#include <xc.h>
 #include	"adc.h"
 
+// 2022 version, XC
 
-__CONFIG(1,FOSC_INTOSC & WDTE_OFF & MCLRE_OFF & PWRTE_ON & CP_OFF & IESO_OFF & FCMEN_OFF);	// Setup the configuration word 
-__CONFIG(2,PLLEN_OFF & BORV_HI & LVP_OFF & STVREN_OFF);	// Setup the configuration word 2
+
+
+// If you want to use pin 4 (GP3) as an input, be sure to disable MCRLE in your config. Here is my 12F683 configuration:
+// CONFIG
+// INTOSC  			// fino a 32, v. OSCCON
+#pragma config FOSC = INTOSC     // Oscillator Selection bits (INTOSC oscillator: I/O function on GP pin)
+#pragma config PLLEN = OFF       // Brown-out Detect Enable bit (BOR disabled)
+#pragma config WDTE = OFF        // Watchdog Timer Enable bit (WDT enabled)
+#pragma config PWRTE = ON       // Power-Up Timer Enable bit (PWRT ensabled)
+#pragma config MCLRE = OFF       // GP3/MCLR pin function select (GP3/MCLR pin function is digital I/O, MCLR internally tied to VDD)
+#pragma config IESO = OFF       // 
+#pragma config FCMEN = OFF       // 
+#pragma config BOREN = OFF       // Brown-out Detect Enable bit (BOR disabled)
+#pragma config BORV = 0          // 
+#pragma config LVP = OFF         // 
+#pragma config CP = OFF          // Code Protection bit (Program Memory code protection is disabled)
+#pragma config WRT = OFF         //
+#pragma config STVREN = OFF       // 
+
 
 #ifndef _XTAL_FREQ
- // Unless already defined assume 4MHz system frequency
+ // Unless already defined assume 4MHz system frequency ??? qua?
  // This definition is required to calibrate __delay_us() and __delay_ms()
- #define _XTAL_FREQ 32000000
+ #define _XTAL_FREQ 8000000
 #endif
 
 
